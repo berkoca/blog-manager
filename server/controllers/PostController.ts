@@ -6,6 +6,7 @@ export class PostController {
         try {
             
         } catch (error) {
+            console.error((error as Error).message);
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ errors: [{ message: (error as Error).message }] });
         }
     }
@@ -14,6 +15,7 @@ export class PostController {
         try {
             
         } catch (error) {
+            console.error((error as Error).message);
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ errors: [{ message: (error as Error).message }] });
         }
     }

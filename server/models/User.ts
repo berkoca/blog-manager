@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Password } from "../library/Password";
 
 const UserSchema = new mongoose.Schema({
     fullname: {
@@ -13,6 +14,12 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     }
+}, { versionKey: false });
+
+UserSchema.pre("save", async function(done) {
+    // Before saving user, hashing the given password
+    const hashed_password = await Password.hash(this.get("password"));
+    this.set("password", hashed_password);
 });
 
 const User = mongoose.model("User", UserSchema);
