@@ -14,7 +14,16 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-}, { versionKey: false });
+}, 
+{ 
+    versionKey: false, 
+    toJSON: { 
+        transform(doc: any, ret: any) {
+            ret.id = ret._id;
+            delete ret._id;
+        } 
+    } 
+});
 
 UserSchema.pre("save", async function(done) {
     // Before saving user, hashing the given password

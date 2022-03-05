@@ -18,7 +18,16 @@ const PostSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: "user"
     }
-}, { versionKey: false });
+}, 
+{ 
+    versionKey: false, 
+    toJSON: { 
+        transform(doc: any, ret: any) {
+            ret.id = ret._id;
+            delete ret._id;
+        } 
+    } 
+});
 
 const Post = mongoose.model("Post", PostSchema);
 
