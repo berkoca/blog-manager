@@ -26,8 +26,16 @@ const Blog = (props) => {
 
     if (e.target.value) {
       for (const post of posts) {
-        if (post.title.includes(e.target.value) || post.content.includes(e.target.value) || post.category_tags.includes(e.target.value)) {
+        if (post.title.toLowerCase().includes(e.target.value) || post.content.toLowerCase().includes(e.target.value)) {
           filtered.push(post)
+        } else {
+          if (post.category_tags.length) {
+            for (const category_tag of post.category_tags) {
+              if (category_tag.toLowerCase().includes(e.target.value)) {
+                filtered.push(post)
+              }
+            }
+          }
         }
       }
     }
@@ -63,7 +71,9 @@ const Blog = (props) => {
             <Card key={post.id} style={{ padding: "15px" }}>
               <div style={{ display: "flex" }}>
                 <div style={{ width: "50%" }}>
-                  <img style={{ width: "100%", borderRadius: "7px" }} src={`https://blog.berkoca.com/public/${post.image_path}`}></img>
+                  <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
+                    <img style={{ width: "100%", borderRadius: "7px" }} src={`https://blog.berkoca.com/public/${post.image_path}`}></img>
+                  </div>
                 </div>
                 <div style={{ width: "50%" }}>
                   <CardHeader>

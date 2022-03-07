@@ -27,7 +27,7 @@ export class PostController {
                 fs.mkdirpSync(folder_path);
                 // @ts-ignore
                 req.files.file.mv(image_path);
-                await Post.findOneAndUpdate({ id: post.id }, { image_path: serve_path })
+                await Post.findByIdAndUpdate(post.id, { image_path: serve_path })
             }
             return res.status(httpStatus.CREATED).json({ errors: [], data: post });
         } catch (error) {

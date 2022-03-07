@@ -9,6 +9,8 @@ const AddPost = () => {
   const [categoryTags, setCategoryTags] = useState()
   const [file, setFile] = useState()
 
+  const history = useHistory()
+
   const createPost = (e) => {
     e.preventDefault()
     
@@ -22,7 +24,7 @@ const AddPost = () => {
 
     axios.post("https://blog.berkoca.com/api/posts", formData, { headers: { authorization: `Bearer ${jwt}` } })
       .then(response => {
-        useHistory().go("/posts")
+        history.replace("/posts")
       }).catch(error => {
         console.log(error.response)
       })
