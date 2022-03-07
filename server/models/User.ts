@@ -16,7 +16,8 @@ const UserSchema = new mongoose.Schema({
     }
 }, 
 { 
-    versionKey: false, 
+    versionKey: false,
+    timestamps: true,
     toJSON: { 
         transform(doc: any, ret: any) {
             ret.id = ret._id;
