@@ -9,7 +9,6 @@ const Posts = () => {
     axios.get("https://blog.berkoca.com/api/posts")
       .then(response => {
         if (response && response.data && response.data.data) {
-          console.log(response.data.data)
           setPosts(response.data.data.map(post => {
             return (
               <Card key={post.id} style={{ padding: "15px" }}>
