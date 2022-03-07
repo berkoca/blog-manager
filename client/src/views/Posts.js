@@ -23,7 +23,7 @@ const Posts = () => {
                       <CardTitle>{post.title}</CardTitle>
                     </CardHeader>
                     <CardBody>
-                      <CardText>{post.content}</CardText>
+                    <CardText dangerouslySetInnerHTML={{ __html: post.content }}></CardText>
                       <CardText>
                         {post.category_tags.length ? post.category_tags.map(category_tag => {
                           return (
