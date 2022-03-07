@@ -9,5 +9,6 @@ const post_router: Router = Router();
 
 post_router.get("/", controller.getPosts);
 post_router.post("/", authentication, validation(PostValidationSchema.create()), controller.createPost);
+post_router.delete("/:id", authentication, controller.deletePost);
 
 export default post_router;

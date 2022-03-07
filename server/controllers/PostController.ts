@@ -35,4 +35,17 @@ export class PostController {
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ errors: [{ message: (error as Error).message }] });
         }
     }
+
+    public async deletePost(req: Request, res: Response) {
+        try {
+            const post = await Post.findByIdAndDelete(req.params.id);
+            if (!post) {
+                return res.status(httpStatus.NOT_FOUND).json({ errors: [{ message: `Post with id: ${req.params.id} has not been found.` }] });
+            }
+            return res.status(httpStatus.OK).json({ errors: [] });
+        } catch (error) {
+            console.error((error as Error).message);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ errors: [{ message: (error as Error).message }] });
+        }
+    }
 }
