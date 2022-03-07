@@ -26,7 +26,7 @@ const Posts = () => {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:3000/api/posts/${post.id}`, { headers: { authorization: `Bearer ${jwt}` } })
+        axios.delete(`https://blog.berkoca.com/api/posts/${post.id}`, { headers: { authorization: `Bearer ${jwt}` } })
           .then(response => {
             swal.fire(
               'Deleted!',
