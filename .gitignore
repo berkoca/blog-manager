@@ -1,5 +1,4 @@
 node_modules
 server/.env
 server/files
-server/build
 .DS_Store
