@@ -14,7 +14,9 @@ const Posts = () => {
               <Card key={post.id} style={{ padding: "15px" }}>
                 <div style={{ display: "flex" }}>
                   <div style={{ width: "20%" }}>
-                    <img style={{ width: "100%", borderRadius: "7px" }} src={`https://blog.berkoca.com/public/${post.image_path}`}></img>
+                    <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
+                      <img style={{ width: "100%", borderRadius: "7px" }} src={`https://blog.berkoca.com/public/${post.image_path}`}></img>
+                    </div>
                   </div>
                   <div style={{ width: "80%" }}>
                     <CardHeader>
