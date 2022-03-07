@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-export class PostSchema {
+export class PostValidationSchema {
     static create(): Joi.ObjectSchema {
         return Joi.object({
             title: Joi.string().min(3).required(),
