@@ -1,47 +1,49 @@
 import { Card, CardHeader, CardBody, CardTitle, CardText, CardLink } from 'reactstrap'
+import { useEffect, useState } from 'react'
+import axios from "axios"
 
 const Posts = () => {
+  const [posts, setPosts] = useState([])
+
+  useEffect(() => {
+    axios.get("https://blog.berkoca.com/api/posts")
+      .then(response => {
+        if (response && response.data && response.data.data) {
+          console.log(response.data.data)
+          setPosts(response.data.data.map(post => {
+            return (
+              <Card key={post.id} style={{ padding: "15px" }}>
+                <div style={{ display: "flex" }}>
+                  <div style={{ width: "50%" }}>
+                    <img style={{ width: "100%", borderRadius: "7px" }} src={`https://blog.berkoca.com/public/${post.image_path}`}></img>
+                  </div>
+                  <div style={{ width: "50%" }}>
+                    <CardHeader>
+                      <CardTitle>{post.title}</CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                      <CardText>{post.content}</CardText>
+                      <CardText>
+                        {post.category_tags.length ? post.category_tags.map(category_tag => {
+                          return (
+                            <CardLink key={category_tag} href='' target='_blank'>
+                              {category_tag}
+                            </CardLink>
+                          )
+                        }) : ""}
+                      </CardText>
+                    </CardBody>
+                  </div>
+                </div>
+              </Card>
+            )
+          }))
+        }
+      }).catch(error => console.log(error))
+  }, [])
   return (
     <div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Kick start your project 🚀</CardTitle>
-        </CardHeader>
-        <CardBody>
-          <CardText>All the best for your new project.</CardText>
-          <CardText>
-            Please make sure to read our{' '}
-            <CardLink
-              href='https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/documentation/'
-              target='_blank'
-            >
-              Template Documentation
-            </CardLink>{' '}
-            to understand where to go from here and how to use our template.
-          </CardText>
-        </CardBody>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Want to integrate JWT? 🔒</CardTitle>
-        </CardHeader>
-        <CardBody>
-          <CardText>
-            We carefully crafted JWT flow so you can implement JWT with ease and with minimum efforts.
-          </CardText>
-          <CardText>
-            Please read our{' '}
-            <CardLink
-              href='https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/documentation/development/auth'
-              target='_blank'
-            >
-              JWT Documentation
-            </CardLink>{' '}
-            to get more out of JWT authentication.
-          </CardText>
-        </CardBody>
-      </Card>
+      {posts}
     </div>
   )
 }

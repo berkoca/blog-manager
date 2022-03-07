@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
 import Post from "../models/Post";
+import path from "path";
+import fs from "fs-extra";
 
 export class PostController {
     public async getPosts(req: Request, res: Response) {
@@ -15,7 +17,18 @@ export class PostController {
 
     public async createPost(req: Request, res: Response) {
         try {
+            if (req.body.category_tags) req.body.category_tags.split(" ");
+            req.body.user_id = req.user?.id;
             const post = await Post.create(req.body);
+            if (req.files?.file) {
+                const folder_path = path.join(__dirname, "../", "files", post.id);
+                const image_path = path.join(folder_path, (req.files.file as any).name);
+                const serve_path = path.join(post.id, (req.files.file as any).name)
+                fs.mkdirpSync(folder_path);
+                // @ts-ignore
+                req.files.file.mv(image_path);
+                await Post.findOneAndUpdate({ id: post.id }, { image_path: serve_path })
+            }
             return res.status(httpStatus.CREATED).json({ errors: [], data: post });
         } catch (error) {
             console.error((error as Error).message);
