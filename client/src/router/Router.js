@@ -75,9 +75,9 @@ const Router = () => {
       resource = route.meta.resource ? route.meta.resource : null
     }
 
-    if (!isUserLoggedIn() && (route.path === "/blog" || route.path === "/login")) {
+    if (!isUserLoggedIn() && (route.path === "/posts" || route.path === "/login")) {
       return <Redirect to={route.path} />
-    } else if (!isUserLoggedIn() && (route.path === "/posts" || route.path === "/add-post")) {
+    } else if (!isUserLoggedIn() && (route.path === "/admin/posts" || route.path === "/admin/add-post" || route.path === "/admin/users")) {
       return <Redirect to="/login" />
     } else if (isUserLoggedIn() && route.path !== "/login") {
       return <Redirect to={route.path} />
