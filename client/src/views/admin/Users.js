@@ -1,14 +1,12 @@
-import axios from "axios"
+import axios from "../../utility/axios"
 import { useEffect, useState } from "react"
 import { Table } from "reactstrap"
 
 const Users = () => {
   const [users, setUsers] = useState([])
 
-  const jwt = localStorage.getItem("jwt")
-
   useEffect(() => {
-    axios.get("https://blog.berkoca.com/api/users", { headers: { authorization: `Bearer ${jwt}` } })
+    axios.get("/api/users")
       .then((response) => {
         if (response && response.data && response.data.data) {
           setUsers(response.data.data)

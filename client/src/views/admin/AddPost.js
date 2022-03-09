@@ -23,7 +23,7 @@ const AddPost = () => {
     formData.append("content", editorRef.current.getContent())
     formData.append("category_tags", categoryTags)
 
-    axios.post("https://blog.berkoca.com/api/posts", formData, { headers: { authorization: `Bearer ${jwt}` } })
+    axios.post("/api/posts", formData, { headers: { authorization: `Bearer ${jwt}` } })
       .then(response => {
         history.replace("/posts")
       }).catch(error => {

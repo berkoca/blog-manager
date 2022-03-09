@@ -1,13 +1,11 @@
 import { Card, CardHeader, CardBody, CardTitle, CardText, CardLink } from 'reactstrap'
 import { useEffect, useState } from 'react'
-import axios from "axios"
+import axios from "../../utility/axios"
 import { Trash2 } from "react-feather"
 import Swal from "sweetalert2"
 
 const Posts = () => {
   const [posts, setPosts] = useState([])
-
-  const jwt = localStorage.getItem("jwt")
 
   const deletePost = (post) => {
     const swal = Swal.mixin({
@@ -26,7 +24,7 @@ const Posts = () => {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`https://blog.berkoca.com/api/posts/${post.id}`, { headers: { authorization: `Bearer ${jwt}` } })
+        axios.delete(`/api/posts/${post.id}`)
           .then(response => {
             swal.fire(
               'Deleted!',
@@ -42,13 +40,14 @@ const Posts = () => {
   }
 
   useEffect(() => {
-    axios.get("https://blog.berkoca.com/api/posts")
+    axios.get("/api/posts")
       .then(response => {
         if (response && response.data && response.data.data) {
           setPosts(response.data.data)
         }
       }).catch(error => console.log(error))
   }, [])
+
   return (
     <div>
       {posts.map(post => {

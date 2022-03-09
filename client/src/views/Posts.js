@@ -1,7 +1,7 @@
 import { Card, CardHeader, CardLink, CardBody, CardTitle, CardText, Navbar, Input, InputGroup } from 'reactstrap'
 import '@styles/base/core/menu/menu-types/horizontal-menu.scss'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import axios from '../utility/axios'
 import classnames from 'classnames'
 import { useSkin } from '@hooks/useSkin'
 import { Sun, Moon } from 'react-feather'
@@ -12,7 +12,7 @@ const Blog = (props) => {
   const [skin, setSkin] = useSkin()
 
   useEffect(() => {
-    axios.get("https://blog.berkoca.com/api/posts")
+    axios.get("/api/posts")
       .then(response => {
         if (response && response.data && response.data.data) {
           setPosts(response.data.data)

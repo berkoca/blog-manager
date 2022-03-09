@@ -12,8 +12,7 @@ const Footer = () => {
         <span className='d-none d-sm-inline-block'>, All rights Reserved</span>
       </span>
       <span className='float-md-right d-none d-md-block'>
-        Hand-crafted & Made with
-        <Heart size={14} />
+        Hand-crafted & Made with <Heart color='red' size={20} />
       </span>
     </p>
   )

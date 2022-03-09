@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom'
 import InputPasswordToggle from '@components/input-password-toggle'
 import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, CustomInput, Button, Alert } from 'reactstrap'
 import { useState } from "react"
-import axios from "axios"
+import axios from "../utility/axios"
 import '@styles/base/pages/page-auth.scss'
 
 const Login = () => {
@@ -16,7 +16,7 @@ const Login = () => {
   const signIn = (e) => {
     e.preventDefault()
     setError({ show: false, message: null })
-    axios.post("https://blog.berkoca.com/api/authentication/login", { email, password })
+    axios.post("/api/authentication/login", { email, password })
       .then(response => {
         if (response.data.data) {
           const json = atob(response.data.data.split(".")[1])
