@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import httpStatus, { OK } from "http-status";
+import httpStatus from "http-status";
 import Post from "../models/Post";
 import path from "path";
 import fs from "fs-extra";
