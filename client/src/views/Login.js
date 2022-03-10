@@ -22,7 +22,7 @@ const Login = () => {
           const json = atob(response.data.data.split(".")[1])
           localStorage.setItem("userData", json)
           localStorage.setItem("jwt", response.data.data)
-          history.replace("/posts")
+          history.replace("/admin/posts")
         }
       }).catch(error => {
         setError({ show: true, message: error.response.data.errors.map(err => err.message).join(", ") })

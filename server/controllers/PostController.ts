@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import httpStatus from "http-status";
+import httpStatus, { OK } from "http-status";
 import Post from "../models/Post";
 import path from "path";
 import fs from "fs-extra";
@@ -9,6 +9,20 @@ export class PostController {
         try {
             const posts = await Post.find().populate({ path: "user_id", select: "fullname" });
             return res.status(httpStatus.OK).json({ errors: [], data: posts });
+        } catch (error) {
+            console.error((error as Error).message);
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ errors: [{ message: (error as Error).message }] });
+        }
+    }
+    
+    public async getPost(req: Request, res: Response) {
+        try {
+            const post = await Post.findById(req.params.id).populate({ path: "user_id", select: "fullname" })
+            if (!post) {
+                return res.status(httpStatus.OK).json({ errors: [{ message: `Post with id: ${req.params.id} has not been found.` }] });
+            }
+
+            return res.status(httpStatus.OK).json({ errors: [], data: post });
         } catch (error) {
             console.error((error as Error).message);
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ errors: [{ message: (error as Error).message }] });

@@ -68,7 +68,7 @@ const Posts = () => {
                   <CardTitle>{post.title}</CardTitle>
                 </CardHeader>
                 <CardBody>
-                  <CardText dangerouslySetInnerHTML={{ __html: post.content }}></CardText>
+                  <CardText dangerouslySetInnerHTML={{ __html: post.summary || "No summary." }}></CardText>
                   <div style={{ marginTop: "30px" }}>
                       <hr/>
                       <CardText>

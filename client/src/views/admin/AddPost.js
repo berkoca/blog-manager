@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../../utility/axios'
 import { useState, useRef } from 'react'
 import { InputGroup, Input, Card, CardBody, Button, CardHeader, Label } from 'reactstrap'
 import { Link, useHistory } from 'react-router-dom'
@@ -8,6 +8,7 @@ const AddPost = () => {
   const [title, setTitle] = useState()
   const [categoryTags, setCategoryTags] = useState()
   const [file, setFile] = useState()
+  const [summary, setSummary] = useState()
 
   const history = useHistory()
   const editorRef = useRef(null)
@@ -20,12 +21,13 @@ const AddPost = () => {
 
     formData.append("file", file)
     formData.append("title", title)
+    formData.append("summary", summary)
     formData.append("content", editorRef.current.getContent())
     formData.append("category_tags", categoryTags)
 
     axios.post("/api/posts", formData, { headers: { authorization: `Bearer ${jwt}` } })
       .then(response => {
-        history.replace("/posts")
+        history.replace("/admin/posts")
       }).catch(error => {
         console.log(error.response)
       })
@@ -43,6 +45,9 @@ const AddPost = () => {
         <CardBody>
           <InputGroup className='mb-2'>
             <Input onChange={e => setTitle(e.target.value)} placeholder='Title' />
+          </InputGroup>
+          <InputGroup className='mb-2'>
+            <Input onChange={e => setSummary(e.target.value)} type="textarea" placeholder="Summary." />
           </InputGroup>
           <InputGroup className='mb-2'>
             <Editor

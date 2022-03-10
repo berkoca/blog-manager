@@ -6,11 +6,22 @@ import classnames from 'classnames'
 import { useSkin } from '@hooks/useSkin'
 import { Sun, Moon } from 'react-feather'
 import moment from 'moment'
+import FooterComponent from '../@core/layouts/components/footer'
+import { useFooterType } from '@hooks/useFooterType'
+import { Link } from 'react-router-dom'
 
-const Blog = (props) => {
+const Posts = (props) => {
   const [posts, setPosts] = useState([])
   const [filteredPosts, setFilteredPosts] = useState([])
   const [skin, setSkin] = useSkin()
+  const [footerType, setFooterType] = useFooterType()
+
+  // ** Vars
+  const footerClasses = {
+    static: 'footer-static',
+    sticky: 'footer-fixed',
+    hidden: 'footer-hidden'
+  }
 
   useEffect(() => {
     axios.get("/api/posts")
@@ -81,7 +92,8 @@ const Blog = (props) => {
                     <CardTitle>{post.title}</CardTitle>
                   </CardHeader>
                   <CardBody>
-                    <CardText dangerouslySetInnerHTML={{ __html: post.content }}></CardText>
+                    <CardText dangerouslySetInnerHTML={{ __html: post.summary || "No summary." }}></CardText>
+                    <Link to={`/posts/${post.id}`} style={{ borderBottom: "1px solid", fontSize: "12px" }}>Continue reading</Link>
                     <div style={{ marginTop: "30px" }}>
                       <hr/>
                       <CardText>
@@ -102,8 +114,19 @@ const Blog = (props) => {
           )
         }) : "No result found."}
       </div>
+      <footer
+        className={classnames(`footer-light ${footerClasses[footerType] || 'footer-static'}`, {
+          'd-none': footerType === 'hidden'
+        })}
+      >
+        {props.footer ? (
+          footer({ footerType, footerClasses })
+        ) : (
+          <FooterComponent footerType={footerType} footerClasses={footerClasses} />
+        )}
+      </footer>
     </div >
   )
 }
 
-export default Blog
+export default Posts
