@@ -7,7 +7,7 @@ import fs from "fs-extra";
 export class PostController {
     public async getPosts(req: Request, res: Response) {
         try {
-            const posts = await Post.find();
+            const posts = await Post.find().populate({ path: "user_id", select: "fullname" });
             return res.status(httpStatus.OK).json({ errors: [], data: posts });
         } catch (error) {
             console.error((error as Error).message);

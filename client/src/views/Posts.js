@@ -5,6 +5,7 @@ import axios from '../utility/axios'
 import classnames from 'classnames'
 import { useSkin } from '@hooks/useSkin'
 import { Sun, Moon } from 'react-feather'
+import moment from 'moment'
 
 const Blog = (props) => {
   const [posts, setPosts] = useState([])
@@ -81,15 +82,19 @@ const Blog = (props) => {
                   </CardHeader>
                   <CardBody>
                     <CardText dangerouslySetInnerHTML={{ __html: post.content }}></CardText>
-                    <CardText>
-                      {post.category_tags.length ? post.category_tags.map(category_tag => {
-                        return (
-                          <CardLink key={category_tag} href='' target='_blank'>
-                            {category_tag}
-                          </CardLink>
-                        )
-                      }) : ""}
-                    </CardText>
+                    <div style={{ marginTop: "30px" }}>
+                      <hr/>
+                      <CardText>
+                        {post.category_tags.length ? post.category_tags.map(category_tag => {
+                          return (
+                            <CardLink key={category_tag} href='' target='_blank'>
+                              {category_tag}
+                            </CardLink>
+                          )
+                        }) : ""}
+                      </CardText>
+                      <CardText style={{ fontWeight: "600", fontSize: 12 }}><span style={{ opacity: 0.7 }}>by</span> {post.user_id.fullname} <span style={{ opacity: 0.7 }}>at</span> {moment(post.createdAt).format("DD/MM/YYYY HH:mm")}</CardText>
+                    </div>
                   </CardBody>
                 </div>
               </div>

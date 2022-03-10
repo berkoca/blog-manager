@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import axios from "../../utility/axios"
 import { Trash2 } from "react-feather"
 import Swal from "sweetalert2"
+import moment from 'moment'
 
 const Posts = () => {
   const [posts, setPosts] = useState([])
@@ -68,15 +69,19 @@ const Posts = () => {
                 </CardHeader>
                 <CardBody>
                   <CardText dangerouslySetInnerHTML={{ __html: post.content }}></CardText>
-                  <CardText>
-                    {post.category_tags.length ? post.category_tags.map(category_tag => {
-                      return (
-                        <CardLink key={category_tag} href='' target='_blank'>
-                          {category_tag}
-                        </CardLink>
-                      )
-                    }) : ""}
-                  </CardText>
+                  <div style={{ marginTop: "30px" }}>
+                      <hr/>
+                      <CardText>
+                        {post.category_tags.length ? post.category_tags.map(category_tag => {
+                          return (
+                            <CardLink key={category_tag} href='' target='_blank'>
+                              {category_tag}
+                            </CardLink>
+                          )
+                        }) : ""}
+                      </CardText>
+                      <CardText style={{ fontWeight: "600", fontSize: 12 }}><span style={{ opacity: 0.7 }}>by</span> {post.user_id.fullname} <span style={{ opacity: 0.7 }}>at</span> {moment(post.createdAt).format("DD/MM/YYYY HH:mm")}</CardText>
+                    </div>
                 </CardBody>
               </div>
             </div>

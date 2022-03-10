@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import User from "./User";
 
 const PostSchema = new mongoose.Schema({
     image_path: {
@@ -15,7 +16,7 @@ const PostSchema = new mongoose.Schema({
     category_tags: [String],
     user_id: {
         type: mongoose.Types.ObjectId,
-        ref: "user"
+        ref: User
     }
 }, 
 { 

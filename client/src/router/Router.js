@@ -82,7 +82,7 @@ const Router = () => {
     } else if (isUserLoggedIn() && route.path !== "/login") {
       return <Redirect to={route.path} />
     } else if (isUserLoggedIn() && route.path === "/login") {
-      return <Redirect to="/posts" />
+      return <Redirect to="/admin/posts" />
     }
   }
 
