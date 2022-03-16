@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { UserRole } from "../enums/UserRole";
 import User from "../models/User";
 
 export class Database {
@@ -14,7 +15,8 @@ export class Database {
                 await User.create({
                     fullname: process.env.FIRST_USER_FULLNAME!,
                     email: process.env.FIRST_USER_EMAIL!,
-                    password: process.env.FIRST_USER_PASSWORD!
+                    password: process.env.FIRST_USER_PASSWORD!,
+                    role: UserRole.ADMIN
                 });
                 console.log("First user has been initialized.");
             }

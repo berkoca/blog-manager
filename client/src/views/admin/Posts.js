@@ -49,6 +49,11 @@ const Posts = () => {
       }).catch(error => console.log(error))
   }, [])
 
+  const isDeletable = (post) => {
+    const user = JSON.parse(localStorage.getItem("userData"))
+    return (post.user_id.id === user.id || user.role === "admin")
+  }
+
   return (
     <div>
       {posts.map(post => {
@@ -61,9 +66,9 @@ const Posts = () => {
                 </div>
               </div>
               <div style={{ width: "80%" }}>
-                <span onClick={() => deletePost(post)} className='float-md-right d-none d-md-block' style={{ cursor: "pointer" }}>
+                {isDeletable(post) && <span onClick={() => deletePost(post)} className='float-md-right d-none d-md-block' style={{ cursor: "pointer" }}>
                   <Trash2 color='#ff6666' size={20} />
-                </span>
+                </span>}
                 <CardHeader>
                   <CardTitle>{post.title}</CardTitle>
                 </CardHeader>

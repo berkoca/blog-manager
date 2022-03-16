@@ -3,6 +3,8 @@ import httpStatus from "http-status";
 import Post from "../models/Post";
 import path from "path";
 import fs from "fs-extra";
+import User from "../models/User";
+import { UserRole } from "../enums/UserRole";
 
 export class PostController {
     public async getPosts(req: Request, res: Response) {
@@ -52,10 +54,16 @@ export class PostController {
 
     public async deletePost(req: Request, res: Response) {
         try {
-            const post = await Post.findByIdAndDelete(req.params.id);
+            const post = await Post.findById(req.params.id).populate("user_id");
             if (!post) {
                 return res.status(httpStatus.NOT_FOUND).json({ errors: [{ message: `Post with id: ${req.params.id} has not been found.` }] });
             }
+            const user = await User.findById(req.user!.id);
+            const isDeletable: boolean = (post.user_id.id === req.user!.id) || (user.role === UserRole.ADMIN);
+            if (!isDeletable) {
+                return res.status(httpStatus.BAD_REQUEST).json({ errors: [{ message: `Post with id: ${req.params.id} is not belongs to current user.` }] });
+            }
+            post.remove();
             return res.status(httpStatus.OK).json({ errors: [] });
         } catch (error) {
             console.error((error as Error).message);

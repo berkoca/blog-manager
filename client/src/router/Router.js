@@ -67,6 +67,7 @@ const Router = () => {
    */
   const FinalRoute = props => {
     const route = props.route
+    const user = isUserLoggedIn() ? JSON.parse(localStorage.getItem("userData")) : null
     let action, resource
 
     // ** Assign vars based on route meta
@@ -77,7 +78,7 @@ const Router = () => {
 
     if (!isUserLoggedIn() && (route.path === "/posts" || route.path === "/posts/:id" || route.path === "/login")) {
       return <Route path={route.path} />
-    } else if (!isUserLoggedIn() && (route.path === "/admin/posts" || route.path === "/admin/add-post" || route.path === "/admin/users")) {
+    } else if (!isUserLoggedIn() && (route.path === "/admin/posts" || route.path === "/admin/add-post" || route.path === "/admin/users" || route.path === "/admin/add-user")) {
       return <Redirect to="/login" />
     } else if (isUserLoggedIn() && route.path === "/login") {
       return <Redirect to="/admin/posts" />

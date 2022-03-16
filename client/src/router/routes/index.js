@@ -21,6 +21,10 @@ const Routes = [
     component: lazy(() => import('../../views/admin/Users'))
   },
   {
+    path: '/admin/add-user',
+    component: lazy(() => import('../../views/admin/AddUser'))
+  },
+  {
     path: '/posts/:id',
     component: lazy(() => import('../../views/Post')),
     layout: 'BlankLayout'

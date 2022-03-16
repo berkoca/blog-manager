@@ -25,7 +25,8 @@ export class AuthenticationController {
             const user_jwt = JWT.sign({
                 id: user._id,
                 fullname: user.fullname,
-                email: user.email
+                email: user.email,
+                role: user.role
             }, process.env.JWT_SECRET!);
 
             return res.status(httpStatus.OK).json({ errors: [], data: user_jwt });

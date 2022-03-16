@@ -1,22 +1,28 @@
-import { Mail, Home, User } from 'react-feather'
+import { Users, Archive, UserPlus, FilePlus } from 'react-feather'
 
 export default [
   {
     id: 'posts',
     title: 'Posts',
-    icon: <Home size={20} />,
+    icon: <Archive size={20} />,
     navLink: '/admin/posts'
   },
   {
     id: 'addPost',
     title: 'Add Post',
-    icon: <Mail size={20} />,
+    icon: <FilePlus size={20} />,
     navLink: '/admin/add-post'
   },
   {
     id: 'users',
     title: 'Users',
-    icon: <User size={20} />,
+    icon: <Users size={20} />,
     navLink: '/admin/users'
+  },
+  {
+    id: 'addUser',
+    title: 'Add User',
+    icon: <UserPlus size={20} />,
+    navLink: '/admin/add-user'
   }
 ]
